@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel = "stylesheet" href="numberGuessingGameCSS.css">
+    <title>Document</title>
+</head>
+<body>
+    <p id = "title">Number Guessing Game</p>
+    <div id = "message">Guess The Number</div>
+    <div id = "guessSection">
+        <input type = "number" id = "inputNumber">
+        <button id = "guessButton">Submit</button>
+    </div>
+    <div id = "hintSection">
+        <p id = "chance">Chance Left:</p>
+        <p id = "pastGuess">Past Guess: </p>
+    </div>
+    <script>
+        let value = Math.floor(Math.random() * 11);
+        var chanceLeft = 10;
+        var button = document.getElementById("guessButton");
+        button.onclick = function() {
+            var guess = document.getElementById("inputNumber").value;
+            if (guess == "") {
+                document.getElementById("message").innerHTML = "Please enter a number !";
+                document.getElementById("message").style.backgroundColor = "red";
+            }
+            else if (guess == value) {
+                document.getElementById("message").innerHTML = "You win! Wait to restart!";
+                document.getElementById("message").style.backgroundColor = "green";
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+            else if (guess > value) {
+                document.getElementById("message").innerHTML = "Your guess is too high ! Try to guess lower!";
+                document.getElementById("message").style.backgroundColor = "red";
+                chanceLeft--;
+                var pastGuess = document.getElementById("pastGuess").textContent;
+                document.getElementById("pastGuess").innerHTML = pastGuess + " " + guess;
+                document.getElementById("chance").innerHTML = "Chance Left: " + chanceLeft;
+            }
+            else {
+                document.getElementById("message").innerHTML = "Your guess is too low ! Try to guess higher!"
+                document.getElementById("message").style.backgroundColor = "red";
+                chanceLeft--;
+                var pastGuess = document.getElementById("pastGuess").textContent;
+                document.getElementById("pastGuess").innerHTML = pastGuess + " " + guess;
+                document.getElementById("chance").innerHTML = "Chance Left: " + chanceLeft;
+            }
+            if (chanceLeft == 0) {
+                document.getElementById("message").innerHTML = "Sorry ! You've lost ! Wait to restart!";
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
